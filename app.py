@@ -8,7 +8,7 @@ from IPython.display import Audio, display  # Used for testing in notebooks
 app = Flask(__name__)
 
 # Set Groq API key (replace with your actual key)
-GROQ_API_KEY = "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"
+GROQ_API_KEY = ""
 
 # Language mapping
 LANGUAGE_CODES = {
@@ -69,20 +69,7 @@ def get_translation(text, target_language):
     if translation:
         return translation
 
-    # Try Hugging Face if Google fails
-    translation = translate_with_huggingface(text)
-    if translation:
-        return translation
 
-    # Try Groq API if others fail
-    return translate_with_groq(text, target_language)
-
-def text_to_speech(text, language_code):
-    """Converts translated text to speech and saves the audio file."""
-    tts = gTTS(text=text, lang=language_code)
-    audio_file = "static/output.mp3"
-    tts.save(audio_file)
-    return audio_file
 
 @app.route("/")
 def home():
